@@ -50,9 +50,29 @@ public class MainActivity extends AppCompatActivity {
             double lat = location.getLatitude();
             double lon = location.getLongitude();
 
-            locationText.setText("Lat: " + lat + "\nLon: " + lon);
+            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
+            try {
+                List<Address> addresses = geocoder.getFromLocation(lat, lon, 1);
+
+                if (addresses != null && !addresses.isEmpty()) {
+                    String address = addresses.get(0).getAddressLine(0);
+
+                    locationText.setText(
+                            "Lat: " + lat +
+                                    "\nLon: " + lon +
+                                    "\nAddress: " + address
+                    );
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         } else {
             locationText.setText("Turn ON location and try again");
         }
+
+
     }
 }
