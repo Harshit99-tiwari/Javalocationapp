@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp"
+    android:background="#F5F5F5">
 
     <TextView
         android:id="@+id/locationText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="Location will appear here"
-        android:textSize="18sp"
-        android:layout_margin="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:textSize="16sp"
+        android:textColor="#000000"
+        android:padding="16dp"
+        android:background="#FFFFFF"
+        android:elevation="4dp"
+        android:lineSpacingExtra="4dp"/>
 
     <Button
+        android:id="@+id/btnLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Get Location"
         android:onClick="getLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-<<<<<<< HEAD
-
-=======
->>>>>>> parent of dbf8db9 (Add mapFragment to layout)
+        android:layout_marginTop="24dp"/>
 
 </LinearLayout>

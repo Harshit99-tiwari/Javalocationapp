@@ -59,9 +59,9 @@ public class MainActivity extends AppCompatActivity {
                     String address = addresses.get(0).getAddressLine(0);
 
                     locationText.setText(
-                            "Lat: " + lat +
-                                    "\nLon: " + lon +
-                                    "\nAddress: " + address
+                            "📍 Latitude: " + lat +
+                                    "\n🌍 Longitude: " + lon +
+                                    "\n🏠 Address: " + address
                     );
                 }
 
