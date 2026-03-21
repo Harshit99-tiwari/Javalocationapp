@@ -34,12 +34,8 @@ This is a simple Android application built using Java that fetches the user's cu
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 <uses-permission android:name="android.permission.INTERNET"/>
 
+
 ## 👨‍💻 Author
 -HARSHIT NATH TIWARI
 -Github: https://github.com/Harshit99-tiwari
- 
 
-
-```xml
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-<uses-permission android:name="android.permission.INTERNET"/>
