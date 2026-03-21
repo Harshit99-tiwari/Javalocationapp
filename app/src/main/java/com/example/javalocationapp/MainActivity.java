@@ -1,4 +1,6 @@
 package com.example.javalocationapp;
+import android.widget.Button;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,20 +21,19 @@ import android.location.Address;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-
+    Button btnLocation;
     TextView locationText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        btnLocation = findViewById(R.id.btnLocation);
         locationText = findViewById(R.id.locationText);
     }
 
     public void getLocation(View view) {
-
+        locationText.setText("Fetching location...");
         LocationManager locationManager =
                 (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         if (location != null) {
             double lat = location.getLatitude();
             double lon = location.getLongitude();
+            btnLocation.setText("Refresh Location");
 
             Geocoder geocoder = new Geocoder(this, Locale.getDefault());
 
@@ -70,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         } else {
-            locationText.setText("Turn ON location and try again");
+            locationText.setText("⚠ Please turn ON location and try again");
         }
 
 
