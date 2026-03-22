@@ -18,10 +18,16 @@ import android.location.Geocoder;
 import java.util.List;
 import android.location.Address;
 import java.util.Locale;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
+    RecyclerView recyclerView;
+    LocationAdapter adapter;
     Button btnLocation;
-    TextView locationText;
+
 
     ArrayList<locationmodel> locationList = new ArrayList<>();
 
@@ -30,11 +36,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btnLocation = findViewById(R.id.btnLocation);
-        locationText = findViewById(R.id.locationText);
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        adapter = new LocationAdapter(locationList);
+        recyclerView.setAdapter(adapter);
     }
 
     public void getLocation(View view) {
-        locationText.append("\n\nFetching location...");
+
         LocationManager locationManager =
                 (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -62,12 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     String address = addresses.get(0).getAddressLine(0);
                     locationmodel Location = new locationmodel(lat, lon, address);
                     locationList.add(Location);
-
-                    locationText.append(
-                            "\n\n📍 Latitude: " + lat +
-                                    "\n🌍 Longitude: " + lon +
-                                    "\n🏠 Address: " + address
-                    );
+                    adapter.notifyDataSetChanged();
                 }
 
             } catch (Exception e) {
@@ -75,12 +81,13 @@ public class MainActivity extends AppCompatActivity {
             }
 
         } else {
-            locationText.setText("⚠ Please turn ON location and try again");
+            Toast.makeText(this, "Location not found. Turn ON GPS", Toast.LENGTH_SHORT).show();
         }
 
 
     }
     public void clearHistory(View view) {
-        locationText.setText("History cleared");
+        locationList.clear();
+        adapter.notifyDataSetChanged();
     }
 }
