@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getLocation(View view) {
-        locationText.setText("Fetching location...");
+        locationText.append("\n\nFetching location...");
         LocationManager locationManager =
                 (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
                 if (addresses != null && !addresses.isEmpty()) {
                     String address = addresses.get(0).getAddressLine(0);
 
-                    locationText.setText(
-                            "📍 Latitude: " + lat +
+                    locationText.append(
+                            "\n\n📍 Latitude: " + lat +
                                     "\n🌍 Longitude: " + lon +
                                     "\n🏠 Address: " + address
                     );
