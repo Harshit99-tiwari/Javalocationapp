@@ -30,4 +30,14 @@
         android:backgroundTint="#6200EE"
         android:textColor="#FFFFFF"/>
 
+    <Button
+        android:id="@+id/btnClear"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Clear History"
+        android:layout_marginTop="12dp"
+        android:onClick="clearHistory"
+        android:backgroundTint="#FF4444"
+        android:textColor="#FFFFFF"/>
+
 </LinearLayout>
