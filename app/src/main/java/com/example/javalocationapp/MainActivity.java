@@ -1,12 +1,11 @@
 package com.example.javalocationapp;
 import android.widget.Button;
-
-
+import java.util.ArrayList;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-
+import com.example.javalocationapp.locationmodel;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import androidx.core.app.ActivityCompat;
@@ -23,6 +22,8 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
     Button btnLocation;
     TextView locationText;
+
+    ArrayList<locationmodel> locationList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
                 if (addresses != null && !addresses.isEmpty()) {
                     String address = addresses.get(0).getAddressLine(0);
+                    locationmodel Location = new locationmodel(lat, lon, address);
+                    locationList.add(Location);
 
                     locationText.append(
                             "\n\n📍 Latitude: " + lat +
