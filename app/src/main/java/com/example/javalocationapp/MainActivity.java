@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.widget.Toast;
 import android.content.SharedPreferences;
 import com.google.gson.Gson;
+import java.lang.reflect.Type;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        loadData();
         adapter = new LocationAdapter(locationList);
         recyclerView.setAdapter(adapter);
     }
@@ -104,5 +106,17 @@ public class MainActivity extends AppCompatActivity {
 
         editor.putString("location_list", json);
         editor.apply();
+    }
+    private void loadData() {
+
+        SharedPreferences prefs = getSharedPreferences("location_prefs", MODE_PRIVATE);
+
+        Gson gson = new Gson();
+        String json = prefs.getString("location_list", null);
+
+        if (json != null) {
+            Type type = new com.google.gson.reflect.TypeToken<ArrayList<locationmodel>>() {}.getType();
+            locationList = gson.fromJson(json, type);
+        }
     }
 }
