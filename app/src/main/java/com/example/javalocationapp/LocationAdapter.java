@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import android.widget.Button;
 
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHolder> {
 
@@ -20,6 +21,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvLat, tvLon, tvAddress;
+        Button btnDelete;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -27,6 +29,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
             tvLat = itemView.findViewById(R.id.tvLat);
             tvLon = itemView.findViewById(R.id.tvLon);
             tvAddress = itemView.findViewById(R.id.tvAddress);
+            btnDelete = itemView.findViewById(R.id.btnDelete);
         }
     }
 
@@ -45,6 +48,10 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
         holder.tvLat.setText("📍 Lat: " + location.latitude);
         holder.tvLon.setText("🌍 Lon: " + location.longitude);
         holder.tvAddress.setText("🏠 " + location.address);
+        holder.btnDelete.setOnClickListener(v -> {
+            locationList.remove(position);
+            notifyDataSetChanged();
+        });
     }
 
     @Override
