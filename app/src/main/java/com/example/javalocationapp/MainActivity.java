@@ -21,6 +21,8 @@ import java.util.Locale;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import android.widget.Toast;
+import android.content.SharedPreferences;
+import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                     locationmodel Location = new locationmodel(lat, lon, address);
                     locationList.add(Location);
                     adapter.notifyDataSetChanged();
+                    saveData();
                 }
 
             } catch (Exception e) {
@@ -89,5 +92,17 @@ public class MainActivity extends AppCompatActivity {
     public void clearHistory(View view) {
         locationList.clear();
         adapter.notifyDataSetChanged();
+        saveData();
+    }
+    private void saveData() {
+
+        SharedPreferences prefs = getSharedPreferences("location_prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(locationList);
+
+        editor.putString("location_list", json);
+        editor.apply();
     }
 }
