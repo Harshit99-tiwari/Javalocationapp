@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     LocationAdapter adapter;
     Button btnLocation;
 
+    TextView tvEmpty;
+
 
     ArrayList<locationmodel> locationList = new ArrayList<>();
 
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        tvEmpty = findViewById(R.id.tvEmpty);
         btnLocation = findViewById(R.id.btnLocation);
 
         recyclerView = findViewById(R.id.recyclerView);
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         loadData();
         adapter = new LocationAdapter(locationList);
         recyclerView.setAdapter(adapter);
+        checkEmptyState();
     }
 
     public void getLocation(View view) {
@@ -78,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                     locationmodel Location = new locationmodel(lat, lon, address);
                     locationList.add(Location);
                     adapter.notifyDataSetChanged();
+                    checkEmptyState();
                     saveData();
                 }
 
@@ -94,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
     public void clearHistory(View view) {
         locationList.clear();
         adapter.notifyDataSetChanged();
+        checkEmptyState();
         saveData();
     }
     private void saveData() {
@@ -117,6 +123,15 @@ public class MainActivity extends AppCompatActivity {
         if (json != null) {
             Type type = new com.google.gson.reflect.TypeToken<ArrayList<locationmodel>>() {}.getType();
             locationList = gson.fromJson(json, type);
+        }
+    }
+    private void checkEmptyState() {
+        if (locationList.isEmpty()) {
+            tvEmpty.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            tvEmpty.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
         }
     }
 }
