@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import java.lang.reflect.Type;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,11 +57,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         checkEmptyState();
     }
-
     public void getLocation(View view) {
-
-        LocationManager locationManager =
-                (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         if (ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -70,37 +67,42 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, location -> {
+                    if (location != null) {
 
-        if (location != null) {
-            double lat = location.getLatitude();
-            double lon = location.getLongitude();
-            btnLocation.setText("Refresh Location");
+                        double lat = location.getLatitude();
+                        double lon = location.getLongitude();
 
-            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+                        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
 
-            try {
-                List<Address> addresses = geocoder.getFromLocation(lat, lon, 1);
+                        try {
+                            List<Address> addresses = geocoder.getFromLocation(lat, lon, 1);
 
-                if (addresses != null && !addresses.isEmpty()) {
-                    String address = addresses.get(0).getAddressLine(0);
-                    locationmodel Location = new locationmodel(lat, lon, address);
-                    locationList.add(Location);
-                    adapter.notifyDataSetChanged();
-                    checkEmptyState();
-                    saveData();
-                }
+                            if (addresses != null && !addresses.isEmpty()) {
+                                String address = addresses.get(0).getAddressLine(0);
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                                locationmodel loc = new locationmodel(lat, lon, address);
+                                locationList.add(loc);
+                                adapter.notifyDataSetChanged();
 
-        } else {
-            Toast.makeText(this, "Location not found. Turn ON GPS", Toast.LENGTH_SHORT).show();
-        }
+                                saveData();
+                                checkEmptyState();
+                            }
 
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
+                    } else {
+                        Toast.makeText(this, "Location not found", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
+
+
+
+
     public void clearHistory(View view) {
         locationList.clear();
         adapter.notifyDataSetChanged();
