@@ -24,8 +24,12 @@ import android.widget.Toast;
 import android.content.SharedPreferences;
 import com.google.gson.Gson;
 import java.lang.reflect.Type;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 
 public class MainActivity extends AppCompatActivity {
+
+    FusedLocationProviderClient fusedLocationClient;
 
     RecyclerView recyclerView;
     LocationAdapter adapter;
@@ -42,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         tvEmpty = findViewById(R.id.tvEmpty);
         btnLocation = findViewById(R.id.btnLocation);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
